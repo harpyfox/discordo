@@ -34,7 +34,7 @@ func newGuildsTree(cfg *config.Config) *guildsTree {
 		SetGraphics(cfg.Theme.GuildsTree.Graphics).
 		SetGraphicsColor(tcell.GetColor(cfg.Theme.GuildsTree.GraphicsColor)).
 		SetSelectedFunc(gt.onSelected).
-		SetTitle("Guilds").
+		SetTitle("Servers").
 		SetInputCapture(gt.onInputCapture)
 
 	return gt

@@ -70,7 +70,7 @@ func newMessageInput(cfg *config.Config) *messageInput {
 	mi.Box = ui.ConfigureBox(mi.Box, &cfg.Theme)
 	mi.SetInputCapture(mi.onInputCapture)
 	mi.
-		SetPlaceholder("Select a channel to start chatting").
+		SetPlaceholder("message").
 		SetPlaceholderStyle(tcell.StyleDefault.Dim(true)).
 		SetDisabled(true)
 

@@ -59,7 +59,7 @@ func newMessagesList(cfg *config.Config) *messagesList {
 		SetWordWrap(true).
 		ScrollToEnd().
 		SetHighlightedFunc(ml.onHighlighted).
-		SetTitle("Messages").
+		SetTitle("").
 		SetInputCapture(ml.onInputCapture)
 	return ml
 }
@@ -97,7 +97,7 @@ func (ml *messagesList) drawMessage(writer io.Writer, message discord.Message) {
 	if ml.cfg.HideBlockedUsers {
 		isBlocked := discordState.UserIsBlocked(message.Author.ID)
 		if isBlocked {
-			io.WriteString(writer, "[:red:b]Blocked message[:-:-]")
+			io.WriteString(writer, "[red::b][BLOCKED][-::-]")
 			return
 		}
 	}
@@ -115,7 +115,7 @@ func (ml *messagesList) drawMessage(writer io.Writer, message discord.Message) {
 	case discord.GuildMemberJoinMessage:
 		ml.drawTimestamps(writer, message.Timestamp)
 		ml.drawAuthor(writer, message)
-		fmt.Fprint(writer, "joined the server.")
+		fmt.Fprint(writer, "[::d]joined the server[::D]")
 	case discord.InlinedReplyMessage:
 		ml.drawReplyMessage(writer, message)
 	case discord.ChannelPinnedMessage:
@@ -220,7 +220,7 @@ func (ml *messagesList) drawReplyMessage(w io.Writer, message discord.Message) {
 		ml.drawAuthor(w, *m)
 		ml.drawContent(w, *m)
 	} else {
-		io.WriteString(w, "Original message was deleted")
+		io.WriteString(w, "[red::][MESSAGE DELETED][-::]")
 	}
 
 	io.WriteString(w, "\n")
@@ -530,7 +530,7 @@ func (ml *messagesList) reply(mention bool) {
 	title := "Replying to "
 	if mention {
 		data.AllowedMentions.RepliedUser = option.True
-		title = "[@] " + title
+		title = "@" + title
 	}
 
 	app.chatView.messageInput.sendMessageData = data
